@@ -1,6 +1,15 @@
-import Link from "next/link";
+import Link from 'next/link'
 
-const Navbar = () => {
+type UserProps = {
+  user?: {
+    name?: string | null | undefined
+    email?: string | null | undefined
+    image?: string | null | undefined
+  }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const Navbar = ({ session }: { session: UserProps | null }) => {
   return (
     <div className="w-[90%] mx-auto flex items-center justify-between bg-white border-b py-4">
       <div className="flex items-center">
@@ -77,7 +86,7 @@ const Navbar = () => {
         </Link>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar
