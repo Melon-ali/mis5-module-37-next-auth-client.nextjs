@@ -1,10 +1,12 @@
 'use client'
+import { loginUser } from '@/utils/actions/loginUser'
 import { signIn } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 
-type FormValues = {
+export type FormValues = {
   email: string
   password: string
 }
@@ -16,8 +18,22 @@ const LoginPage = () => {
     formState: { errors },
   } = useForm<FormValues>()
 
+  const router = useRouter()
+
   const onSubmit = async (data: FormValues) => {
-    console.log(data)
+    // console.log(data)
+    try {
+      const res = await loginUser(data)
+      // console.log(res);
+      if (res.accessToken) {
+        alert(res.message)
+        localStorage.setItem('accessToken', res.accessToken)
+        router.push('/')
+      }
+    } catch (err) {
+      console.error(err.message)
+      throw new Error(err.message)
+    }
   }
 
   return (
@@ -95,7 +111,7 @@ const LoginPage = () => {
 
           {/* Social Login Buttons */}
           <div className="flex justify-center gap-4 mt-4">
-            <button 
+            <button
               onClick={() =>
                 signIn('google', {
                   callbackUrl: 'http://localhost:3000/dashboard',
