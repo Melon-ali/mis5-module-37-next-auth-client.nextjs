@@ -95,7 +95,7 @@ const LoginPage = () => {
 
           {/* Social Login Buttons */}
           <div className="flex justify-center gap-4 mt-4">
-            <button
+            <button 
               onClick={() =>
                 signIn('google', {
                   callbackUrl: 'http://localhost:3000/dashboard',
